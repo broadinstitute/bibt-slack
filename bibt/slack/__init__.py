@@ -1,4 +1,4 @@
-from .methods import send_message
+from .methods import post_message
 from .version import __version__
 
-__all__ = ("__version__", "send_message")
+__all__ = ("__version__", "post_message")
