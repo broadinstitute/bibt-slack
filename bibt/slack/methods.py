@@ -11,6 +11,9 @@ _LOGGER = logging.getLogger(__name__)
 def _check_len(text):
     if len(text) > SLACK_MAX_TEXT_LENGTH:
         text = text[: SLACK_MAX_TEXT_LENGTH - 4] + "\n..."
+    elif len(text) < 1:
+        _LOGGER.warning("Not adding empty string to message.")
+        return None
     return text
 
 
@@ -79,6 +82,8 @@ def post_message(
         text = None
     if text:
         text = _check_len(text)
+        if not text:
+            raise Exception("Cannot pass empty string as text.")
         msg = {
             "blocks": [{"type": "section", "text": {"type": "mrkdwn", "text": title}}],
             "attachments": [
@@ -100,13 +105,19 @@ def post_message(
                 }
             ],
         }
+        added_block = False
         for block in blocks:
             block = _check_len(block)
+            if not block:
+                continue
             msg["attachments"][0]["blocks"].append(
                 {"type": "section", "text": {"type": "mrkdwn", "text": block}}
             )
+            added_block = True
             if dividers:
                 msg["attachments"][0]["blocks"].append({"type": "divider"})
+        if not added_block:
+            raise Exception("No valid text blocks passed (must have len < 0)")
 
     else:
         raise Exception("Either text or blocks must be passed.")
