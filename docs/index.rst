@@ -7,15 +7,11 @@ bibt-slack: BITS Blue Team Utilities: Slack Module
 -  **Project Repo**: https://github.com/broadinstitute/bibt-slack
 -  **Project Documentation**: https://bibt-slack.readthedocs.io/en/latest/
 
-
-|build| |docs| |last_commit|
+|docs| |last_commit|
 
 |status| |pypi| |top_lang|
 
 |versions| |pypi_installs|
-
-.. |pypi| image:: https://img.shields.io/pypi/v/bibt-slack
-   :target: https://pypi.org/project/bibt-slack/
 
 .. |versions| image:: https://img.shields.io/pypi/pyversions/bibt-slack
    :target: https://pypi.org/project/bibt-slack/
