@@ -2,6 +2,6 @@ Slack
 ~~~~~
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 3
 
     modules/slack
