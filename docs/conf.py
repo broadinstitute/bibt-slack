@@ -78,5 +78,5 @@ add_module_names = True
 
 
 intersphinx_mapping = {
-    "python": ("https://python.readthedocs.org/en/latest/", None),
+    "python": ("https://python.readthedocs.io/en/latest/", None),
 }

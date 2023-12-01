@@ -6,7 +6,9 @@
 version: 2
 
 # Optionally build your docs in additional formats such as PDF
-formats: all
+formats:
+  - htmlzip
+  - pdf
 
 build:
   os: ubuntu-22.04
