@@ -8,9 +8,13 @@ from .params import SLACK_MAX_TEXT_LENGTH
 _LOGGER = logging.getLogger(__name__)
 
 
-def _check_len(text):
+def _check_len(text, trim_end):
     if len(text) > SLACK_MAX_TEXT_LENGTH:
-        text = text[: SLACK_MAX_TEXT_LENGTH - 4] + "\n..."
+        offset = SLACK_MAX_TEXT_LENGTH - 4
+        if trim_end:
+            text = text[:offset] + "\n..."
+        else:
+            text = "...\n" + text[-offset:]
     elif len(text) < 1:
         _LOGGER.warning("Not adding empty string to message.")
         return None
@@ -25,6 +29,7 @@ def post_message(
     blocks=None,
     dividers=False,
     raise_for_status=True,
+    trim_end=True,
 ):
     """Posts a message to Slack.
 
@@ -63,6 +68,13 @@ def post_message(
         and raise an exception, defaults to ``True``.
     :type raise_for_status: bool, optional
 
+    :param trim_end: Whether or not to trim the *end* of messages that are too
+        long for the API (>3000 characters). If set to ``False``, it will trim
+        the beginning instead of the end of the message. Regardless, trimmed
+        characters will not be included in the message to Slack. Defaults to
+        ``True`` (will cut off the end of messages).
+    :type trim_end: bool, optional
+
     :raises Exception: if ``raise_for_status==True`` and an HTTP error was raised.
 
     :return: the requests.Response object returned by the API call.
@@ -81,7 +93,7 @@ def post_message(
         blocks = [text].extend(blocks)
         text = None
     if text:
-        text = _check_len(text)
+        text = _check_len(text, trim_end)
         if not text:
             raise Exception("Cannot pass empty string as text.")
         msg = {
@@ -107,7 +119,7 @@ def post_message(
         }
         added_block = False
         for block in blocks:
-            block = _check_len(block)
+            block = _check_len(block, trim_end)
             if not block:
                 continue
             msg["attachments"][0]["blocks"].append(
