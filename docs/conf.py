@@ -10,11 +10,10 @@
 import os
 import sys
 
-from bibt.slack import __version__
-
 sys.path.insert(0, os.path.abspath(".."))
 sys.path.insert(0, os.path.abspath("."))
 
+from bibt.slack import __version__  # noqa: E402
 
 # -- Project information -----------------------------------------------------
 
@@ -26,7 +25,7 @@ author = "Matthew OBrien"
 # -- General configuration ---------------------------------------------------
 
 version = __version__
-release = __version__
+release = version
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
