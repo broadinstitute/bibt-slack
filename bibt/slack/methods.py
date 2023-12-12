@@ -35,7 +35,16 @@ def post_message(
 
     .. code:: python
 
-        from bibt.slack import send_message
+        from bibt.slack import post_message
+        post_message(
+            "https://hooks.slack.com/....",
+            "My Message Title",
+            color="#ffffff",
+            blocks=[
+                "My first block",
+                "My second block"
+            ]
+        )
         ...
 
 

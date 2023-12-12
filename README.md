@@ -15,6 +15,7 @@ $ pip install --upgrade bibt-slack
 ## Usage
 
 - See documentation here: https://bibt-slack.readthedocs.io/en/latest/
+- For more complicated Slack workflows, consider using [Slack Bolt](https://slack.dev/bolt-python/api-docs/slack_bolt/).
 
 ## All BIBT Libraries
 
