@@ -3,6 +3,7 @@ import logging
 import requests
 
 from .params import DEFAULT_SLACK_ATTACHMENT_COLOR
+from .params import SLACK_MAX_BLOCK_COUNT
 from .params import SLACK_MAX_TEXT_LENGTH
 
 _LOGGER = logging.getLogger(__name__)
@@ -142,6 +143,14 @@ def post_message(
 
     else:
         raise Exception("Either text or blocks must be passed.")
+
+    block_count = len(msg["attachments"][0]["blocks"])
+    if block_count > SLACK_MAX_BLOCK_COUNT:
+        logging.warning(
+            f"Too many blocks passed ({block_count}), only sending first 50."
+        )
+        msg["attachments"][0]["blocks"] = msg["attachments"][0]["blocks"][:50]
+
     r = requests.post(webhook, json=msg)
     if raise_for_status:
         try:
