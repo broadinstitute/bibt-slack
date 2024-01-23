@@ -147,9 +147,21 @@ def post_message(
     block_count = len(msg["attachments"][0]["blocks"])
     if block_count > SLACK_MAX_BLOCK_COUNT:
         logging.warning(
-            f"Too many blocks passed ({block_count}), only sending first 50."
+            f"Too many blocks passed ({block_count}), only sending first 49."
         )
-        msg["attachments"][0]["blocks"] = msg["attachments"][0]["blocks"][:50]
+        msg["attachments"][0]["blocks"] = msg["attachments"][0]["blocks"][:49]
+        msg["attachments"][0]["blocks"].append(
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": (
+                        f"_{block_count-49} additional blocks were "
+                        "trimmed from this message._"
+                    ),
+                },
+            }
+        )
 
     r = requests.post(webhook, json=msg)
     if raise_for_status:
