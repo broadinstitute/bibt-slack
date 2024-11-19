@@ -1,0 +1,27 @@
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: bibt-slack
+  title: bibt-slack
+  description: "BITS Blue Team Utilities: Slack Module"
+  links:
+    - url: https://bibt-slack.broadinstitute.org
+      title: bibt-slack
+      icon: dashboard
+  tags:
+    - bits
+    - bits-tools
+    - security
+  annotations:
+    backstage.io/kubernetes-id: bibt-slack
+    github.com/project-slug: broadinstitute/bibt-slack
+    google.com/cloudbuild-project-slug: bits-gke-clusters
+    google.com/cloudbuild-repo-name: bibt-slack
+    google.com/cloudbuild-location: us-east4
+    backstage.io/techdocs-ref: dir:.
+spec:
+  type: library
+  owner: bits-blue-team
+  lifecycle: production
+  system: bibt-libraries

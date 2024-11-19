@@ -226,5 +226,6 @@ cython_debug/
 !**/.placeholder
 !docs/_build/**
 !requirements.txt
+!requirements-test.txt
 !requirements-dev.txt
 .envrc
