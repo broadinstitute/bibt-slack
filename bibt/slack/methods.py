@@ -45,6 +45,9 @@ def post_message(
             blocks=[
                 "My first block",
                 "My second block"
+            ],
+            buttons=[
+                ("Button Text", "action_id", "value", "style")
             ]
         )
         ...
@@ -70,6 +73,11 @@ def post_message(
     :param blocks: A list of strings, each to be put in its own attachment
         block, defaults to ``None``. You must supply either ``text`` or ``blocks``.
     :type blocks: str, optional
+
+    :param buttons: A list of string 4-tuples describing each button to be added.
+        Each tuple should be of the form ``(text, action_id, value, style)``.
+        See here for more information: https://api.slack.com/reference/block-kit/block-elements#button
+    :type buttons: list, optional
 
     :param dividers: When generating multiple blocks, whether or not to
         include dividers between them, defaults to ``False``.
