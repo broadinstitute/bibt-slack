@@ -4,6 +4,8 @@
 #          the broadinstitute/bibt-terraform repository.          #
 #  Any changes made outside that repository WILL be overwritten.  #
 ###################################################################
-bump2version==1.0.1
-pre-commit==4.0.1
-pytest==8.3.4
+version: 2
+updates:
+  - package-ecosystem: pip
+    directory: "/"
+    open-pull-requests-limit: 0

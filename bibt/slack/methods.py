@@ -28,6 +28,7 @@ def post_message(
     text=None,
     color=None,
     blocks=None,
+    buttons=None,
     dividers=False,
     raise_for_status=True,
     trim_end=True,
@@ -44,6 +45,9 @@ def post_message(
             blocks=[
                 "My first block",
                 "My second block"
+            ],
+            buttons=[
+                ("Button Text", "action_id", "value", "style")
             ]
         )
         ...
@@ -69,6 +73,11 @@ def post_message(
     :param blocks: A list of strings, each to be put in its own attachment
         block, defaults to ``None``. You must supply either ``text`` or ``blocks``.
     :type blocks: str, optional
+
+    :param buttons: A list of string 4-tuples describing each button to be added.
+        Each tuple should be of the form ``(text, action_id, value, style)``.
+        See here for more information: https://api.slack.com/reference/block-kit/block-elements#button
+    :type buttons: list, optional
 
     :param dividers: When generating multiple blocks, whether or not to
         include dividers between them, defaults to ``False``.
@@ -145,23 +154,55 @@ def post_message(
         raise Exception("Either text or blocks must be passed.")
 
     block_count = len(msg["attachments"][0]["blocks"])
-    if block_count > SLACK_MAX_BLOCK_COUNT:
+    max_blocks = SLACK_MAX_BLOCK_COUNT - 1
+    if block_count > max_blocks:
+        trim_len = max_blocks - 1
         logging.warning(
-            f"Too many blocks passed ({block_count}), only sending first 49."
+            f"Too many blocks passed ({block_count}), only sending first {trim_len}."
         )
-        msg["attachments"][0]["blocks"] = msg["attachments"][0]["blocks"][:49]
+        msg["attachments"][0]["blocks"] = msg["attachments"][0]["blocks"][:trim_len]
         msg["attachments"][0]["blocks"].append(
             {
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
                     "text": (
-                        f"_{block_count-49} additional blocks were "
+                        f"_{block_count-trim_len} additional blocks were "
                         "trimmed from this message._"
                     ),
                 },
             }
         )
+
+    if buttons:
+        button_config = {
+            "type": "actions",
+            "elements": [],
+        }
+        for button in buttons:
+            try:
+                text = button[0]
+                action_id = button[1]
+                value = button[2]
+                style = button[3]
+                button_config["elements"].append(
+                    {
+                        "type": "button",
+                        "text": {"type": "plain_text", "emoji": True, "text": text},
+                        "action_id": action_id,
+                        "value": value,
+                        "style": style,
+                    }
+                )
+            except IndexError:
+                logging.error(
+                    "Invalid button configuration: should be a string 4-tuple, "
+                    "i.e. `(text, action_id, value, style)`. You passed: "
+                    f"`{button}`"
+                )
+                break
+        if len(button_config["elements"]) > 0:
+            msg["attachments"][0]["blocks"].append(button_config)
 
     r = requests.post(webhook, json=msg)
     if raise_for_status:

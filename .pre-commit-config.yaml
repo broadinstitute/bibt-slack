@@ -1,9 +1,16 @@
+###################################################################
+#                 !!! DO NOT CHANGE THIS FILE !!!                 #
+#              This file is managed by Terraform in               #
+#          the broadinstitute/bibt-terraform repository.          #
+#  Any changes made outside that repository WILL be overwritten.  #
+###################################################################
+
 ci:
   autoupdate_schedule: quarterly
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v5.0.0
     hooks:
       - id: check-added-large-files
       - id: check-case-conflict
@@ -24,22 +31,22 @@ repos:
       - id: remove-tabs
 
   - repo: https://github.com/asottile/reorder-python-imports
-    rev: v3.9.0
+    rev: v3.13.0
     hooks:
       - id: reorder-python-imports
 
   - repo: https://github.com/Yelp/detect-secrets
-    rev: v1.4.0
+    rev: v1.5.0
     hooks:
       - id: detect-secrets
         args: ["--disable-plugin", "KeywordDetector"]
 
   - repo: https://github.com/psf/black
-    rev: 23.3.0
+    rev: 24.8.0
     hooks:
       - id: black
         # It is recommended to specify the latest version of Python
         # supported by your project here, or alternatively use
         # pre-commit's default_language_version, see
         # https://pre-commit.com/#top_level-default_language_version
-        language_version: python3.11
+        language_version: python3.12
