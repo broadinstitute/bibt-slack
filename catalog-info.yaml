@@ -14,14 +14,10 @@ metadata:
     - bits-tools
     - security
   annotations:
-    backstage.io/kubernetes-id: bibt-slack
     github.com/project-slug: broadinstitute/bibt-slack
-    google.com/cloudbuild-project-slug: bits-gke-clusters
-    google.com/cloudbuild-repo-name: bibt-slack
-    google.com/cloudbuild-location: us-east4
     backstage.io/techdocs-ref: dir:.
 spec:
-  type: library
+  type: service
   owner: bits-blue-team
   lifecycle: production
   system: bibt-libraries
