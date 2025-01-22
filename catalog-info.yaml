@@ -17,7 +17,7 @@ metadata:
     github.com/project-slug: broadinstitute/bibt-slack
     backstage.io/techdocs-ref: dir:.
 spec:
-  type: service
+  type: library
   owner: bits-blue-team
   lifecycle: production
   system: bibt-libraries
