@@ -18,6 +18,6 @@ metadata:
     backstage.io/techdocs-ref: dir:.
 spec:
   type: library
-  owner: bits-blue-team
+  owner: broad-infosec
   lifecycle: production
   system: bibt-libraries
